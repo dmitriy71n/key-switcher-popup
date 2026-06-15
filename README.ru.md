@@ -13,13 +13,27 @@
 
 ## Ручная установка
 
-Выполните команду в терминале для автоматического создания директории, загрузки 3 файлов расширения (`extension.js`, `metadata.json`, `settings-schema.json`) и копирования их в систему:
+Выполните команды в терминале по очереди:
 
+1. Создаем каталог для расширения:
 ```bash
-mkdir -p ~/.local/share/cinnamon/extensions/key-switcher-popup@dmitriy71n && \
-git clone [https://github.com/dmitriy71n/key-switcher-popup.git](https://github.com/dmitriy71n/key-switcher-popup.git) /tmp/key-switcher-popup && \
-cp /tmp/key-switcher-popup/extension.js /tmp/key-switcher-popup/metadata.json /tmp/key-switcher-popup/settings-schema.json ~/.local/share/cinnamon/extensions/key-switcher-popup@dmitriy71n/
+mkdir -p ~/.local/share/cinnamon/extensions/key-switcher-popup@dmitriy71n
 ```
+2. Скачиваем архив:
+```bash
+wget [https://github.com/dmitriy71n/key-switcher-popup/archive/refs/heads/main.zip](https://github.com/dmitriy71n/key-switcher-popup/archive/refs/heads/main.zip) -O key-switcher-popup-main.zip
+```
+3. Распаковываем архив в домашнюю папку:
+```bash
+unzip key-switcher-popup-main.zip -d ~
+```
+4. Переходим в распакованную папку:
+```bash
+cd ~/key-switcher-popup-main
+```
+5. Копируем файлы в систему:
+```bash
+cp extension.js metadata.json settings-schema.json ~/.local/share/cinnamon/extensions/key-switcher-popup@dmitriy71n/
 
 **Активация:**
 1. Перезапустите Cinnamon: нажмите `Alt + F2`, введите `r`, нажмите `Enter`.
