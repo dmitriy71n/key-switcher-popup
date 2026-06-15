@@ -21,7 +21,7 @@ mkdir -p ~/.local/share/cinnamon/extensions/key-switcher-popup@dmitriy71n
 ```
 2. Download the archive:
 ```bash
-wget [https://github.com/dmitriy71n/key-switcher-popup/archive/refs/heads/main.zip](https://github.com/dmitriy71n/key-switcher-popup/archive/refs/heads/main.zip) -O key-switcher-popup-main.zip
+wget https://github.com/dmitriy71n/key-switcher-popup/archive/refs/heads/main.zip
 ```
 3. Extract the archive into your home folder:
 ```bash
@@ -29,7 +29,7 @@ unzip key-switcher-popup-main.zip -d ~
 ```
 4. Change to the extracted directory:
 ```bash
-cd ~/key-switcher-popup-main
+unzip main.zip
 ```
 5. Copy the files into the system:
 ```bash
