@@ -43,7 +43,7 @@
         "max": 100,
         "step": 2,
         "units": "px",
-        "description": "Inner padding (top/bottom)"
+        "description": "Inner padding (top / bottom)"
     },
     "padding_horizontal": {
         "type": "spinbutton",
