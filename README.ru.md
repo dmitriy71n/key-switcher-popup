@@ -34,7 +34,7 @@ cd ~/key-switcher-popup-main
 5. Копируем файлы в систему:
 ```bash
 cp extension.js metadata.json settings-schema.json ~/.local/share/cinnamon/extensions/key-switcher-popup@dmitriy71n/
-
+```
 **Активация:**
 1. Перезапустите Cinnamon: нажмите `Alt + F2`, введите `r`, нажмите `Enter`.
 2. Откройте **Параметры системы -> Расширения**, найдите **Keyboard Switcher Popup** и нажмите кнопку **«+» (Добавить)**.
