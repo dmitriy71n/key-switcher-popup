@@ -11,10 +11,20 @@ let signalSubscriptionId = null;
 let settings = null;
 let timeoutId = null;
 
-// Объект, свойства которого Cinnamon будет автоматически обновлять при изменении в GUI
 let settingsValues = {
     show_on_all_monitors: false,
-    timeout_ms: 3000
+    timeout_ms: 3000,
+    popup_position: 'center',
+    font_size: 32,
+    padding_vertical: 24,
+    padding_horizontal: 32,
+    margin_vertical: 32,
+    margin_horizontal: 32,
+    border_radius: 12,
+    bg_opacity: 75,
+    text_color: 'rgb(255,255,255)',
+    bg_color: 'rgb(50,50,50)',
+    border_color: 'rgb(50,50,50)'
 };
 
 function init(metadata) {}
@@ -22,17 +32,27 @@ function init(metadata) {}
 function enable() {
     global.log('LayoutPopup: Активация.');
 
-    // Безопасная инициализация и жесткая привязка настроек
     try {
         settings = new Settings.ExtensionSettings(settingsValues, 'key-switcher-popup@dmitriy71n');
         settings.bind('show_on_all_monitors', 'show_on_all_monitors', () => {});
         settings.bind('timeout_ms', 'timeout_ms', () => {});
+        settings.bind('popup_position', 'popup_position', () => {});
+        settings.bind('font_size', 'font_size', () => {});
+        settings.bind('padding_vertical', 'padding_vertical', () => {});
+        settings.bind('padding_horizontal', 'padding_horizontal', () => {});
+        settings.bind('margin_vertical', 'margin_vertical', () => {});
+        settings.bind('margin_horizontal', 'margin_horizontal', () => {});
+        settings.bind('border_radius', 'border_radius', () => {});
+        settings.bind('bg_opacity', 'bg_opacity', () => {});
+        settings.bind('text_color', 'text_color', () => {});
+        settings.bind('bg_color', 'bg_color', () => {});
+        settings.bind('border_color', 'border_color', () => {});
+        
         global.log('LayoutPopup: Связь с GUI настроек успешно установлена.');
     } catch (e) {
         global.logError('LayoutPopup: Критическая ошибка связи с настройками: ' + e.message);
     }
 
-    // Подписка на D-Bus сигнал смены раскладки клавиатуры
     try {
         const sessionBus = Gio.bus_get_sync(Gio.BusType.SESSION, null);
         signalSubscriptionId = sessionBus.signal_subscribe(
@@ -96,7 +116,6 @@ function showLayoutPopup(text) {
 
     let targets = [];
 
-    // Используем значения, которые автоматически прилетают из GUI настроек
     if (settingsValues.show_on_all_monitors) {
         const monitors = Main.layoutManager.monitors;
         if (monitors && monitors.length > 0) {
@@ -126,39 +145,107 @@ function showLayoutPopup(text) {
         }
     } catch (e) {}
 
-    const popupStyle = `
+    let alpha = settingsValues.bg_opacity / 100;
+    let bg = settingsValues.bg_color;
+    let finalBgColor = bg;
+
+    if (bg.startsWith('rgb(')) {
+        finalBgColor = bg.replace('rgb(', 'rgba(').replace(')', `, ${alpha})`);
+    } else if (bg.startsWith('#')) {
+        let hex = bg.replace('#', '');
+        if (hex.length === 3) {
+            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        }
+        let r = parseInt(hex.substring(0, 2), 16);
+        let g = parseInt(hex.substring(2, 4), 16);
+        let b = parseInt(hex.substring(4, 6), 16);
+        finalBgColor = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    // Чистый инлайновый стиль без лишних свойств
+    const containerStyle = `
+        background-color: ${finalBgColor};
+        border-radius: ${settingsValues.border_radius}px;
+        border: 1px solid ${settingsValues.border_color};
+        padding: ${settingsValues.padding_vertical}px ${settingsValues.padding_horizontal}px;
+    `;
+
+    const labelStyle = `
         font-family: "${systemFont}";
-        font-size: 32px;
+        font-size: ${settingsValues.font_size}px;
         font-weight: bold;
-        padding: 24px 32px;
-        color: white;
-        background-color: rgba(50, 50, 50, 0.75);
-        border-radius: 12px;
-        text-shadow: 0px 0px 7px #000;
+        color: ${settingsValues.text_color};
     `;
 
     targets.forEach(monitor => {
-        let osd = new St.Label({
-            style: popupStyle,
-            text: text,
+        let container = new St.BoxLayout({
+            style: containerStyle,
             reactive: false,
         });
 
-        Main.uiGroup.add_child(osd);
-        osd.raise_top();
-        osd.set_position(monitor.x + 32, monitor.y + 32);
+        let label = new St.Label({
+            style: labelStyle,
+            text: text
+        });
 
-        osd.opacity = 0;
-        osd.ease({
+        container.add_actor(label);
+
+        Main.uiGroup.add_child(container);
+        container.raise_top();
+
+        let [, naturalWidth] = container.get_preferred_width(-1);
+        let [, naturalHeight] = container.get_preferred_height(-1);
+
+        let marginX = settingsValues.margin_horizontal;
+        let marginY = settingsValues.margin_vertical;
+
+        let x = monitor.x + marginX;
+        let y = monitor.y + marginY;
+
+        switch (settingsValues.popup_position) {
+            case 'top_right':
+                x = monitor.x + monitor.width - naturalWidth - marginX;
+                y = monitor.y + marginY;
+                break;
+            case 'bottom_right':
+                x = monitor.x + monitor.width - naturalWidth - marginX;
+                y = monitor.y + monitor.height - naturalHeight - marginY;
+                break;
+            case 'bottom_left':
+                x = monitor.x + marginX;
+                y = monitor.y + monitor.height - naturalHeight - marginY;
+                break;
+            case 'top_center':
+                x = monitor.x + (monitor.width - naturalWidth) / 2;
+                y = monitor.y + marginY;
+                break;
+            case 'bottom_center':
+                x = monitor.x + (monitor.width - naturalWidth) / 2;
+                y = monitor.y + monitor.height - naturalHeight - marginY;
+                break;
+            case 'center':
+                x = monitor.x + (monitor.width - naturalWidth) / 2;
+                y = monitor.y + (monitor.height - naturalHeight) / 2;
+                break;
+            case 'top_left':
+            default:
+                x = monitor.x + marginX;
+                y = monitor.y + marginY;
+                break;
+        }
+
+        container.set_position(Math.round(x), Math.round(y));
+
+        container.opacity = 0;
+        container.ease({
             opacity: 255,
             duration: 150,
             mode: Clutter.AnimationMode.EASE_OUT_QUAD,
         });
 
-        osds.push(osd);
+        osds.push(container);
     });
 
-    // Берем актуальный таймаут (в миллисекундах) прямо из GUI ползунка
     timeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, settingsValues.timeout_ms, () => {
         hideAllOSDs();
         timeoutId = null;
