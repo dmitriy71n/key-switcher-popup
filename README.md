@@ -46,5 +46,12 @@ cp extension.js metadata.json settings-schema.json ~/.local/share/cinnamon/exten
 
 Manage configuration via: **System Settings -> Extensions -> Keyboard Switcher Popup** (gear icon).
 
-* **Show on all monitors simultaneously** (`show_on_all_monitors`) — toggles indicator display (either only on the active monitor with the mouse cursor or on all screens at once).
-* **Popup display timeout** (`timeout_ms`) — notification visibility duration (from 500 to 10000 ms, step 250 ms).
+* Display on one or more monitors simultaneously.
+* Modal window delay on screen.
+* Screen position.
+* Font size.
+* Font color.
+* Margins.
+* Window background.
+* Border color.
+* Radius.
