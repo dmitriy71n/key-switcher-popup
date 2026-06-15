@@ -13,12 +13,27 @@ Cinnamon extension that displays a modal popup with the current keyboard layout 
 
 ## Manual Installation
 
-Run this command in your terminal to automatically create the directory, download the 3 extension files (`extension.js`, `metadata.json`, `settings-schema.json`), and copy them into the system:
+Run these terminal commands one by one:
 
+1. Create the extension directory:
 ```bash
-mkdir -p ~/.local/share/cinnamon/extensions/key-switcher-popup@dmitriy71n && \
-git clone [https://github.com/dmitriy71n/key-switcher-popup.git](https://github.com/dmitriy71n/key-switcher-popup.git) /tmp/key-switcher-popup && \
-cp /tmp/key-switcher-popup/extension.js /tmp/key-switcher-popup/metadata.json /tmp/key-switcher-popup/settings-schema.json ~/.local/share/cinnamon/extensions/key-switcher-popup@dmitriy71n/
+mkdir -p ~/.local/share/cinnamon/extensions/key-switcher-popup@dmitriy71n
+```
+2. Download the archive:
+```bash
+wget [https://github.com/dmitriy71n/key-switcher-popup/archive/refs/heads/main.zip](https://github.com/dmitriy71n/key-switcher-popup/archive/refs/heads/main.zip) -O key-switcher-popup-main.zip
+```
+3. Extract the archive into your home folder:
+```bash
+unzip key-switcher-popup-main.zip -d ~
+```
+4. Change to the extracted directory:
+```bash
+cd ~/key-switcher-popup-main
+```
+5. Copy the files into the system:
+```bash
+cp extension.js metadata.json settings-schema.json ~/.local/share/cinnamon/extensions/key-switcher-popup@dmitriy71n/
 ```
 
 **Activation:**
