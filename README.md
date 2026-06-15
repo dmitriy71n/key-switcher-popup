@@ -1,19 +1,19 @@
 # Keyboard Switcher Popup (`key-switcher-popup@dmitriy71n`)
 
-Расширение Cinnamon, отображающее модальное окно с текущей раскладкой клавиатуры при её изменении.
+Cinnamon extension that displays a modal popup with the current keyboard layout when it changes.
 
 ---
 
-## Функции и поддержка
-* **Назначение:** Отслеживает смену языка ввода и выводит крупный полупрозрачный индикатор (RU, EN и др.).
-* **Версии Cinnamon:** 6.0, 6.2, 6.4, 6.6.
-* **Сочетания клавиш:** Поддерживает любые системные комбинации (`Alt+Shift`, `Ctrl+Shift`, `Caps Lock`, `Super+Space` и т.д.).
+## Features and Support
+* **Purpose:** Detects input source changes and shows a large semi-transparent OSD indicator (RU, EN, etc.) on the screen.
+* **Cinnamon versions:** 6.0, 6.2, 6.4, 6.6.
+* **Keybindings:** Supports any system shortcuts (`Alt+Shift`, `Ctrl+Shift`, `Caps Lock`, `Super+Space`, etc.).
 
 ---
 
-## Ручная установка
+## Manual Installation
 
-Выполните команду в терминале для автоматического создания директории, загрузки 3 файлов расширения (`extension.js`, `metadata.json`, `settings-schema.json`) и копирования их в систему:
+Run this command in your terminal to automatically create the directory, download the 3 extension files (`extension.js`, `metadata.json`, `settings-schema.json`), and copy them into the system:
 
 ```bash
 mkdir -p ~/.local/share/cinnamon/extensions/key-switcher-popup@dmitriy71n && \
@@ -21,15 +21,15 @@ git clone [https://github.com/dmitriy71n/key-switcher-popup.git](https://github.
 cp /tmp/key-switcher-popup/extension.js /tmp/key-switcher-popup/metadata.json /tmp/key-switcher-popup/settings-schema.json ~/.local/share/cinnamon/extensions/key-switcher-popup@dmitriy71n/
 ```
 
-**Активация:**
-1. Перезапустите Cinnamon: нажмите `Alt + F2`, введите `r`, нажмите `Enter`.
-2. Откройте **Параметры системы -> Расширения**, найдите **Keyboard Switcher Popup** и нажмите кнопку **«+» (Добавить)**.
+**Activation:**
+1. Restart Cinnamon: press `Alt + F2`, type `r`, press `Enter`.
+2. Open **System Settings -> Extensions**, find **Keyboard Switcher Popup**, and click the **"+" (Add)** button.
 
 ---
 
-## Настройки
+## Settings
 
-Управление параметрами осуществляется через меню: **Параметры системы -> Расширения -> Keyboard Switcher Popup** (иконка шестерёнки).
+Manage configuration via: **System Settings -> Extensions -> Keyboard Switcher Popup** (gear icon).
 
-* **Отображать на одном или нескольких мониторах одновременно** (`show_on_all_monitors`) — переключатель вывода индикатора (только на активном мониторе с курсором мыши или на всех экранах сразу).
-* **Задержка модального окна на экране** (`timeout_ms`) — время отображения уведомления (от 500 до 10000 мс, шаг 250 мс).
+* **Show on all monitors simultaneously** (`show_on_all_monitors`) — toggles indicator display (either only on the active monitor with the mouse cursor or on all screens at once).
+* **Popup display timeout** (`timeout_ms`) — notification visibility duration (from 500 to 10000 ms, step 250 ms).
