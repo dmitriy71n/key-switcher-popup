@@ -1,0 +1,16 @@
+{
+    "show_on_all_monitors": {
+        "type": "switch",
+        "default": false,
+        "description": "Show on multiple monitors simultaneously"
+    },
+    "timeout_ms": {
+        "type": "spinbutton",
+        "default": 3000,
+        "min": 500,
+        "max": 10000,
+        "step": 250,
+        "units": "ms",
+        "description": "Modal window screen delay"
+    }
+}
