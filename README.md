@@ -25,11 +25,11 @@ wget https://github.com/dmitriy71n/key-switcher-popup/archive/refs/heads/main.zi
 ```
 3. Extract the archive into your home folder:
 ```bash
-unzip key-switcher-popup-main.zip -d ~
+unzip main.zip
 ```
 4. Change to the extracted directory:
 ```bash
-unzip main.zip
+cd ~/key-switcher-popup-main
 ```
 5. Copy the files into the system:
 ```bash
