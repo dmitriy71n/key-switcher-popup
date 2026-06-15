@@ -21,11 +21,11 @@ mkdir -p ~/.local/share/cinnamon/extensions/key-switcher-popup@dmitriy71n
 ```
 2. Скачиваем архив:
 ```bash
-wget [https://github.com/dmitriy71n/key-switcher-popup/archive/refs/heads/main.zip](https://github.com/dmitriy71n/key-switcher-popup/archive/refs/heads/main.zip) -O key-switcher-popup-main.zip
+wget https://github.com/dmitriy71n/key-switcher-popup/archive/refs/heads/main.zip
 ```
 3. Распаковываем архив в домашнюю папку:
 ```bash
-unzip key-switcher-popup-main.zip -d ~
+unzip main.zip
 ```
 4. Переходим в распакованную папку:
 ```bash
